@@ -1,1 +1,704 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Remmy Developments - Game Developer & Creative Visionary. Explore Shadows of the Broken Timeline, an innovative game combining time manipulation with rich storytelling.">
+    <title>Remmy Developments</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/gallery/RemmyDev.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(45deg, #4a9eff, #6e42ff);
+            --primary-color: #4a9eff;
+            --secondary-color: #6e42ff;
+            --bg-dark: #0a0a0a;
+            --bg-card: rgba(255, 255, 255, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #fff;
+            background-color: var(--bg-dark);
+            overflow-x: hidden;
+        }
+
+        .header {
+            background-color: rgba(26, 26, 26, 0.95);
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+        }
+
+        .header.hidden {
+            transform: translateY(-100%);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 600;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background: var(--primary-gradient);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .hero {
+            height: 100vh;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/gallery/kimon-maritz-mQiZnKwGXW0-unsplash-ts1667577446.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, transparent, var(--bg-dark));
+        }
+
+        .hero-content {
+            max-width: 800px;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 3rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            text-align: center;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero h2 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section {
+            padding: 6rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .section-title.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .game-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .feature-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+            border-color: var(--primary-color);
+        }
+
+        .feature-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .gallery-item.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-item::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.4);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover::after {
+            opacity: 1;
+        }
+
+        .contacts {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .contact-icon {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .contact-icon img {
+            width: 50px;
+            height: 50px;
+            filter: invert(1); /* Converts all icons to white */
+            opacity: 0.8; /* Slight transparency for a clean look */
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        .contact-icon img.discord-logo {
+            filter: none; /* Preserves the original blue color for Discord */
+        }
+        .contact-icon:hover img {
+            transform: scale(1.1); /* Slight zoom effect on hover */
+            opacity: 1; /* Fully opaque on hover */
+        }
+
+        .contact-icon.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .footer {
+            background-color: var(--bg-dark);
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .scroll-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--primary-gradient);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            z-index: 1000;
+        }
+                #youtube {
+            background: var(--bg-dark);
+            padding: 6rem 2rem;
+        }
+
+        .youtube-container {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .youtube-video {
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 2rem;
+        }
+
+        .youtube-video iframe {
+            width: 100%;
+            height: 315px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .scroll-to-top.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 0 1rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero h2 {
+                font-size: 2.5rem;
+            }
+
+            .section {
+                padding: 4rem 1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .scroll-to-top {
+                bottom: 1rem;
+                right: 1rem;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav-container">
+            <h1 class="logo">Remmy Developments</h1>
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#game">Game</a>
+                <a href="#timeline">Timeline</a>
+                <a href="#gallery">Gallery</a>
+                <a href="#youtube">Youtube</a>
+                <a href="#connect">Connect</a>
+            </div>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h2>Game Developer & Creative Visionary</h2>
+            <p>Hello, I'm a passionate game developer focusing on my current project, "Shadows of the Broken Timeline" which combines innovative gameplay mechanics with rich storytelling to deliver a unique gaming experience. With a background in both programming and creative design, I strive to push the boundaries of what's possible in interactive entertainment.</p>
+        </div>
+    </section>
+
+    <section id="game" class="section">
+        <div class="container">
+            <h2 class="section-title">Shadows of the Broken Timeline</h2>
+            <div class="game-features">
+                <div class="feature-card">
+                    <h3>Time Rewinding</h3>
+                    <p>Master the art of temporal manipulation with our innovative time-rewinding system. Challenge yourself with puzzles and combat scenarios that require strategic use of time mechanics to overcome obstacles and defeat enemies.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Player Upgrades</h3>
+                    <p>Unlock and customize your character's abilities through an extensive upgrade system. Combine different powers and skills to create your unique playstyle and tackle challenges in your own way.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Rich Lore</h3>
+                    <p>Dive into a meticulously crafted world where history and fiction intertwine. Uncover the mysteries of the broken timeline through environmental storytelling, character interactions, and hidden collectibles.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="timeline" class="section">
+        <div class="container">
+            <h2 class="section-title">Development Timeline</h2>
+            <div class="feature-card">
+                <h3>Release Window: 2025</h3>
+                <p>Planned release between June and December 2025</p>
+                <p>Targeting multiple platforms: Windows PC, Linux, Mac, PS5, and Xbox</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery" class="section">
+        <div class="container">
+            <h2 class="section-title">Gallery</h2>
+            <div class="gallery">
+                <div class="gallery-item">
+                    <img src="/gallery/MC1.jpg" alt="Game Screenshot 1">
+                </div>
+                <div class="gallery-item">
+                    <img src="/gallery/MC2.jpg" alt="Game Screenshot 2">
+                </div>
+                <div class="gallery-item">
+                    <img src="/gallery/MC3.jpg" alt="Game Screenshot 3">
+                </div>
+                <div class="gallery-item">
+                    <img src="/gallery/MC4.jpg" alt="Game Screenshot 4">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="youtube" class="section">
+        <div class="container">
+            <h2 class="section-title">Watch My Latest YouTube Videos</h2>
+            <div class="youtube-container">
+                <div class="youtube-video">
+                    <iframe src="https://www.youtube.com/embed/dcVw4DKI5OM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="youtube-video">
+                    <iframe src="https://www.youtube.com/embed/v0Az-dUuL9E" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="connect" class="section">
+        <div class="container">
+            <h2 class="section-title">Connect With Me</h2>
+            <div class="contacts">
+                <a href="https://discord.gg/jCwpPXFJHw" class="contact-icon">
+                    <img width="50" height="50" src="/gallery/2d963a8c7642295a24b496c6fc5e0b15.png" alt="Discord" class = "discord-logo">
+                </a>
+                <a href="https://github.com/RemmyDev1" class="contact-icon">
+                    <img width="50" height="50" src="/gallery/github-logo.png" alt="GitHub">
+                </a>
+                <a href="https://www.patreon.com/c/RemmyDev" class="contact-icon">
+                    <img width="50" height="50" src="/gallery/Patreon.png" alt="Patreon">
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <footer class="footer">
+        <p>© 2025 Remmy Developments</p>
+    </footer>
+
+    <div class="scroll-to-top">↑</div>
+        <script>
+
+            // Wait for DOM to be fully loaded
+            document.addEventListener('DOMContentLoaded', () => {
+                // Initialize all features
+                initializeHeaderScroll();
+                initializeScrollReveal();
+                initializeMobileMenu();
+                initializeScrollToTop();
+                initializeLazyLoading();
+                if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                    initializeParticles();
+                }
+            });
+
+            // Header scroll behavior
+            function initializeHeaderScroll() {
+                const header = document.querySelector('.header');
+                let lastScroll = 0;
+
+                window.addEventListener('scroll', () => {
+                    const currentScroll = window.pageYOffset;
+                    
+                    if (currentScroll <= 0) {
+                        header.classList.remove('hidden');
+                        return;
+                    }
+                    
+                    if (currentScroll > lastScroll && currentScroll > 80) {
+                        header.classList.add('hidden');
+                    } else {
+                        header.classList.remove('hidden');
+                    }
+                    
+                    lastScroll = currentScroll;
+                });
+            }
+
+            // Scroll reveal animation
+            function initializeScrollReveal() {
+                const observerOptions = {
+                    threshold: 0.15,
+                    rootMargin: '0px'
+                };
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            observer.unobserve(entry.target); // Stop observing once visible
+                        }
+                    });
+                }, observerOptions);
+
+                // Observe elements
+                const elements = document.querySelectorAll('.feature-card, .gallery-item, .section-title, .contact-icon');
+                elements.forEach(element => observer.observe(element));
+            }
+
+            // Mobile menu functionality
+            function initializeMobileMenu() {
+                const menuBtn = document.querySelector('.mobile-menu-btn');
+                const navLinks = document.querySelector('.nav-links');
+                
+                if (!menuBtn || !navLinks) return;
+
+                menuBtn.addEventListener('click', () => {
+                    navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+                    menuBtn.setAttribute('aria-expanded', 
+                        menuBtn.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'
+                    );
+                });
+
+                // Close menu when clicking outside
+                document.addEventListener('click', (e) => {
+                    if (!menuBtn.contains(e.target) && !navLinks.contains(e.target)) {
+                        navLinks.style.display = 'none';
+                        menuBtn.setAttribute('aria-expanded', 'false');
+                    }
+                });
+            }
+
+            // Scroll to top button
+            function initializeScrollToTop() {
+                const scrollBtn = document.querySelector('.scroll-to-top');
+                if (!scrollBtn) return;
+
+                window.addEventListener('scroll', () => {
+                    if (window.pageYOffset > 300) {
+                        scrollBtn.classList.add('visible');
+                    } else {
+                        scrollBtn.classList.remove('visible');
+                    }
+                });
+
+                scrollBtn.addEventListener('click', () => {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+            }
+
+            // Lazy loading for images
+            function initializeLazyLoading() {
+                if ('loading' in HTMLImageElement.prototype) {
+                    // Browser supports native lazy loading
+                    const images = document.querySelectorAll('img[loading="lazy"]');
+                    images.forEach(img => {
+                        img.src = img.dataset.src;
+                    });
+                } else {
+                    // Fallback for browsers that don't support native lazy loading
+                    const imageObserver = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                const img = entry.target;
+                                img.src = img.dataset.src;
+                                imageObserver.unobserve(img);
+                            }
+                        });
+                    });
+
+                    const images = document.querySelectorAll('img[data-src]');
+                    images.forEach(img => imageObserver.observe(img));
+                }
+            }
+
+            // Particle background effect
+            function initializeParticles() {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                
+                // Setup canvas
+                canvas.style.position = 'fixed';
+                canvas.style.top = '0';
+                canvas.style.left = '0';
+                canvas.style.zIndex = '-1';
+                canvas.style.pointerEvents = 'none';
+                document.body.appendChild(canvas);
+
+                // Particle class
+                class Particle {
+                    constructor() {
+                        this.reset();
+                    }
+
+                    reset() {
+                        this.x = Math.random() * canvas.width;
+                        this.y = Math.random() * canvas.height;
+                        this.size = Math.random() * 2 + 1;
+                        this.speedX = (Math.random() - 0.5) * 0.5;
+                        this.speedY = (Math.random() - 0.5) * 0.5;
+                        this.opacity = Math.random() * 0.5;
+                    }
+
+                    update() {
+                        this.x += this.speedX;
+                        this.y += this.speedY;
+
+                        if (this.x < 0 || this.x > canvas.width) this.reset();
+                        if (this.y < 0 || this.y > canvas.height) this.reset();
+                    }
+
+                    draw() {
+                        ctx.fillStyle = `rgba(74, 158, 255, ${this.opacity})`;
+                        ctx.beginPath();
+                        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                }
+
+                // Initialize particles
+                let particles = [];
+                const PARTICLE_COUNT = 50;
+                
+                function initParticles() {
+                    particles = [];
+                    for (let i = 0; i < PARTICLE_COUNT; i++) {
+                        particles.push(new Particle());
+                    }
+                }
+
+                // Animation loop
+                let animationFrameId;
+                function animate() {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    particles.forEach(particle => {
+                        particle.update();
+                        particle.draw();
+                    });
+                    animationFrameId = requestAnimationFrame(animate);
+                }
+
+                // Handle resize
+                function handleResize() {
+                    canvas.width = window.innerWidth;
+                    canvas.height = window.innerHeight;
+                    initParticles();
+                }
+
+                // Initialize
+                handleResize();
+                animate();
+                window.addEventListener('resize', handleResize);
+
+                // Cleanup function
+                return () => {
+                    cancelAnimationFrame(animationFrameId);
+                    window.removeEventListener('resize', handleResize);
+                    document.body.removeChild(canvas);
+                };
+            }
+        </script>
+</body>
+</html>
